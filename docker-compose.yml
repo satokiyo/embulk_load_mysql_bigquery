@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  dbserver:
+    build: ./mysql
+    container_name: mysql_etl
+    volumes:
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+      - ./mysql/ddl:/docker-entrypoint-initdb.d #  execute files with extensions .sh, .sql and .sql.gz that are found in /docker-entrypoint-initdb.d
+    environment:
+      MYSQL_DATABASE: training
+      MYSQL_USER: fuka_user
+      MYSQL_PASSWORD: fuka_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+      MYSQL_PORT: 3306
+    ports:
+      - 3306:3306
+    tty: true
+  embulk:
+    build: ./embulk
+    container_name: embulk_etl
+    volumes:
+      - ./embulk:/home
+    tty: true
+
+networks:
+  etl_networks:

@@ -1,0 +1,18 @@
+in:
+  type: mysql
+  user: fuka_user
+  password: fuka_pass
+  host: mysql_etl
+  database: training
+  query: select * from departments;
+out:
+  type: bigquery
+  auth_method: json_key
+  json_keyfile: /home/bigquery-test-343301-b6feb1e1d028.json
+  location: asia-northeast1
+  # project: training-project-314502
+  project: bigquery-test-343301
+  dataset: embulk_sample
+  table: departments
+  mode: append
+  auto_create_table: true
